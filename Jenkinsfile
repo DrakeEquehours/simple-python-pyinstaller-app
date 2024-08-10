@@ -15,10 +15,11 @@ node {
     }
     
     stage('Deploy') {
-        // Run the Docker container non-interactively
         sh '''
             docker run --rm -v ${WORKSPACE}:/workspace -w /workspace cdrx/pyinstaller-linux:python2 /bin/bash -c "
             pyinstaller --onefile sources/add2vals.py"
         '''
+
+        archiveArtifacts artifacts: 'dist/add2vals', allowEmptyArchive: true
     }
 }
