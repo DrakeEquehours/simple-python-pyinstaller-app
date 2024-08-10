@@ -15,11 +15,10 @@ node {
     }
     
     stage('Deploy') {
-        withDockerContainer('cdrx/pyinstaller-linux:python2') {
-            checkout scm
-            sh '''
-                bash -c "pyinstaller --onefile sources/add2vals.py"
-            '''
-        }
+        // Run the Docker container interactively using docker run
+        sh '''
+            docker run --rm -it -v ${WORKSPACE}:/workspace -w /workspace cdrx/pyinstaller-linux:python2 /bin/bash -c "
+            pyinstaller --onefile sources/add2vals.py"
+        '''
     }
 }
