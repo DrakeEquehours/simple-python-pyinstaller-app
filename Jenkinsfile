@@ -13,7 +13,7 @@ node {
         }
     }
     stage('Deploy') {
-        withDockerContainer('cdrx/pyinstaller-linux:python2') {
+        withDockerContainer('cdrx/pyinstaller-linux:python2').withRun('-it --entrypoint=/bin/bash') {
             checkout scm
             sh 'pyinstaller --onefile sources/add2vals.py'
         }
